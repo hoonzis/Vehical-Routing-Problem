@@ -1,5 +1,9 @@
 package vrp.program;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import vrp.model.*;
@@ -90,6 +94,53 @@ public class VRPProgram {
 		return returnVal;
 	}
 	
+	/**
+	 * Load the data from file specified in the parameter
+	 * @param file
+	 * @throws IOException
+	 */
+	public static void loadData(String file) throws IOException{
+		//BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-16"));
+		BufferedReader in = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+		nCount = Integer.parseInt(in.readLine());
+		distances = new int[nCount][nCount];
+
+		//nactu tabulku vzdalenosti
+		for(int i=0;i<nCount;i++){
+			String line = in.readLine();
+			String[] inDist = line.split(" ");
+			for(int k=0;k<inDist.length;k++){
+				int dis = Integer.parseInt(inDist[k]);
+				distances[i][k] = dis;
+			}
+		}
+
+		in.readLine();
+
+		//nactu mnozstvi objednaneho zbozi
+		//adresy a souradnice
+		amounts = new int[nCount];
+		nodes = new Node[nCount];
+		adds = new String[nCount];
+
+		for(int i=0;i<nCount;i++){
+			String nodeInfo = in.readLine();
+			String[] info = nodeInfo.split(";");
+			amounts[i] = Integer.parseInt(info[0]);
+
+			Node n = new Node(i);
+			n.amount = amounts[i];
+			adds[i] = info[1];
+			n.add = adds[i];
+
+			if(info.length==4){
+				n.x = Double.parseDouble(info[2]);
+				n.y = Double.parseDouble(info[3]);
+			}
+			nodes[i] = n;
+		}
+	}
+
 	
 	/**
 	 * Implementation of the Sweep algorithm

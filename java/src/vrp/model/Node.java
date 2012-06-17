@@ -8,10 +8,10 @@ public class Node implements Comparable<Node>{
 	
 	
 	public int cluster;
-	public int x;
-	public int y;
+	public double x;
+	public double y;
 	public double angle;
-	
+
 	public int state;
 	public boolean visited;
 	

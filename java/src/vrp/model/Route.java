@@ -55,12 +55,12 @@ public class Route {
 		outEdges[index] = null;
 	}
 	
-	public int predek(int nodeIndex){
+	public int predecessor(int nodeIndex){
 		return inEdges[nodeIndex].n1.index;
 	}
 	
 	
-	public int nasledovnik(int nodeIndex){
+	public int successor(int nodeIndex){
 		return outEdges[nodeIndex].n2.index;
 	}
 	
@@ -69,16 +69,16 @@ public class Route {
 		int from = mergingEdge.n1.index;
 		int to = mergingEdge.n2.index;
 		
-		int predekI = this.predek(from);
-		int predekJ = r2.predek(to);
+		int predecessorI = this.predecessor(from);
+		int predecessorJ = r2.predecessor(to);
 		
-		int nasledovnikI = this.nasledovnik(from);
-		int nasledovnikJ = r2.nasledovnik(to);
+		int successorI = this.successor(from);
+		int successorJ = r2.successor(to);
 		
 		//moznost jedna
 		//hrana smeruje z uzlu ze, ktereho v prvni Route se vracime zpatky do uzlu 0
-		//v druhe route je naopak predek uzlu J sklad = 0
-		if(nasledovnikI == 0 && predekJ == 0){
+		//v druhe route je naopak predecessor uzlu J sklad = 0
+		if(successorI == 0 && predecessorJ == 0){
 			this.removeEdgeToNode(0);
 			r2.removeEdgeFromNode(0);
 			for(Edge e:r2.edges){
@@ -91,7 +91,7 @@ public class Route {
 		//hrana jde jakoby v protismeru
 		//uzel i je v prvni route druhy hned za skladem 
 	    //musime otocit hranu
-		}else if(nasledovnikJ == 0 && predekI == 0){
+		}else if(successorJ == 0 && predecessorI == 0){
 			mergingEdge.reverse();
 			this.removeEdgeFromNode(0);
 			r2.removeEdgeToNode(0);
