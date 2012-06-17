@@ -1,0 +1,2 @@
+# Module vrp.model
+# RPC service class, partial path of RPC policy file

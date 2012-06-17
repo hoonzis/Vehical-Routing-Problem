@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 1.7.1//EN" "http://google-web-toolkit.googlecode.com/svn/tags/1.7.1/distro-source/core/src/gwt-module.dtd">
+<module rename-to='vrpgui'>
+
+  <inherits name='com.google.gwt.user.User'/>
+  <inherits name='com.google.gwt.user.theme.standard.Standard'/>
+  
+  <inherits name='com.google.gwt.maps.GoogleMaps' />
+  <inherits name='vrp.model'/>
+
+  <!-- Specify the app entry point class.                         -->
+  <entry-point class='vrp.client.VRPGui'/>
+  
+  
+</module>
