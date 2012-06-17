@@ -30,10 +30,10 @@ public class Cluster {
 		return n;
 	}
 	
-	public void printMST(){
+	public void printMST(StringBuilder sb){
 		System.out.println("CLUSTER:");
 		for(Edge e:mstE){
-			System.out.println("From: " + e.n1.index + " To: " + e.n2.index + " Val: " + e.val);
+			sb.append("From: " + e.n1.index + " To: " + e.n2.index + " Val: " + e.val);
 		}
 	}
 	
@@ -86,10 +86,21 @@ public class Cluster {
 		}
 	}
 	
-	public void printTSP(){
+	public void printTSP(StringBuilder sb){
 		//System.out.println("CLUSTER TSP:");
 		for(Node n:tsp){
-			System.out.print(n.index + " ");
-		}
+			sb.append(n.index + " ");
+		}		
+	}
+
+	public void printTSPAdds(StringBuilder sb) {
+		int nodeCount  = tsp.size();
+		for(int i=0;i<nodeCount;i++){
+			Node n = tsp.get(i);
+			sb.append(n.add);
+			if(i<nodeCount-1){
+				sb.append("->");
+			}
+		}		
 	}
 }

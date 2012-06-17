@@ -1,13 +1,8 @@
 package vrp.program;
 
+import vrp.model.*;
+
 import java.util.ArrayList;
-
-import vrp.model.Cluster;
-import vrp.model.Edge;
-import vrp.model.Node;
-import vrp.model.Route;
-import vrp.model.Saving;
-
 
 public class MyUtils {
 
@@ -40,18 +35,21 @@ public class MyUtils {
 		System.out.println("Saving - From: " + from + " To: " + to + " Val: " + s.val);
 	}
 	
-	public static void printRoutesCities(ArrayList<Route> routes){
+	public static void printRoutesCities(ArrayList<Route> routes, StringBuilder sb){
 		for(Route r:routes){
-			printCities(r);
-			System.out.print("\n");
+			printCities(r,sb);
+			sb.append("\r\n");
 		}
 	}
 	
-	public static void printAdds(ArrayList<Route> routes,String[] adds){
+	public static void printAdds(ArrayList<Route> routes,String[] adds,StringBuilder sb){
+		int totalCost = 0;
 		for(Route r:routes){
-			printAdds(r,adds);
-			System.out.print("\n");
+			printAdds(r,adds,sb);
+			sb.append("\r\n");
+			totalCost+= r.totalCost;
 		}
+		sb.append("TOTAL COST OF THE ROUTES: " + totalCost);
 	}
 	
 	public static void printRoute(Route r){
@@ -72,16 +70,16 @@ public class MyUtils {
 	}
 	
 	/**
-	 * Prints out the cities of one route
-	 * @param r route to be printed out
+	 * Vytiskne mesta z jedne cesty
+	 * @param r
 	 */
-	public static void printCities(Route r){
-		System.out.print(0 + " ");
+	public static void printCities(Route r,StringBuilder sb){
+		sb.append(0 + " ");
 		Edge edge = r.outEdges[0];
-		System.out.print(edge.n2.index + " ");
+		sb.append(edge.n2.index + " ");
 		do{
 			edge = r.outEdges[edge.n2.index];
-			System.out.print(edge.n2.index + " ");
+			sb.append(edge.n2.index + " ");
 		}while(edge.n2.index!=0);
 	}
 	
@@ -90,13 +88,13 @@ public class MyUtils {
 	 * @param r
 	 * @param adds
 	 */
-	public static void printAdds(Route r,String[] adds){
-		System.out.print(adds[0]);
+	public static void printAdds(Route r,String[] adds,StringBuilder sb){
+		sb.append(adds[0]);
 		Edge edge = r.outEdges[0];
-		System.out.print(" -> " + adds[edge.n2.index]);
+		sb.append(" -> " + adds[edge.n2.index]);
 		do{
 			edge = r.outEdges[edge.n2.index];
-			System.out.print(" -> " + adds[edge.n2.index]);
+			sb.append(" -> " + adds[edge.n2.index]);
 		}while(edge.n2.index!=0);
 	}
 	
@@ -125,7 +123,8 @@ public class MyUtils {
 		return cost;
 	}
 	
-	public static void generateRandomNodes(int count,int distanceMultConst,int amountConst){
+	public static String generateRandomNodes(int count,int distanceMultConst,int amountConst){
+		
 		Node[] nodes = new Node[count];
 		int[][] distances = new int[count][count];
 		
@@ -150,7 +149,7 @@ public class MyUtils {
 		
 		sb.append(count);
 		for(int i=0;i<count;i++){
-			sb.append("\n");
+			sb.append("\r\n");
 			for(int j=0;j<count;j++){
 				if(i==j){
 					sb.append(0);
@@ -165,14 +164,14 @@ public class MyUtils {
 			}
 		}
 		
-		sb.append("\n");
-		sb.append("\n");
+		sb.append("\r\n");
+		sb.append("\r\n");
 		
 		for(int i=0;i<nodes.length;i++){
-			sb.append(nodes[i].amount + "\t" + nodes[i].add + "\t" + nodes[i].x + "\t" + nodes[i].y);
-			sb.append("\n");
+			sb.append(nodes[i].amount + ";" + nodes[i].add + ";" + nodes[i].x + ";" + nodes[i].y);
+			sb.append("\r\n");
 		}
 		
-		System.out.print(sb.toString());
+		return sb.toString();
 	}
 }

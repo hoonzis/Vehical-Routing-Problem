@@ -48,6 +48,8 @@ public class VRPGui implements EntryPoint {
 	private int count;
 	private TextArea output,input;
 	private String[] adds;
+	//current query sended to google maps
+	private String currentQuery = "";
 	
 	private DialogBox exDialog;
 	private TextBox txtNodeCount, txtdistanceConst,txtAmountConst, txtCarLimit;
@@ -103,9 +105,12 @@ public class VRPGui implements EntryPoint {
 		exDialog.add(pn1);
 	}
 	
+	/**
+	 * The callback called when the directions were computed
+	 */
 	DirectionsCallback callBack = new DirectionsCallback(){
 		public void onFailure(int statusCode) {
-			Window.alert("Problem with localization on MAP: " +statusCode);			
+			Window.alert("Problem with localization on MAP: " +statusCode + "\n Query: " + currentQuery);			
 		}
 
 		
@@ -224,10 +229,14 @@ public class VRPGui implements EntryPoint {
 				Node n = new Node(i);
 				
 				String desc[] = cities[i].split(":");
-				
-				n.add = desc[0];
-				n.amount = Integer.parseInt(desc[1].trim());
-				nodes[i] = n;
+				if(desc.length==2){
+					n.add = desc[0];
+					n.amount = Integer.parseInt(desc[1].trim());
+					nodes[i] = n;
+				}else{
+					output.setText("Error in line: " + cities[i]);
+					return;
+				}
 			}
 			
 			count = lst.getItemCount();
@@ -241,8 +250,8 @@ public class VRPGui implements EntryPoint {
 			
 			DirectionQueryOptions opts = new DirectionQueryOptions(map);
 			
-			String query = "from: " + city1 + " to: " + city2; // 500 Memorial Dr, Cambridge, MA to: 4 Yawkey Way, Boston, MA";
-		    Directions.load(query,opts,callBack);
+			currentQuery = "from: " + city1 + " to: " + city2; // 500 Memorial Dr, Cambridge, MA to: 4 Yawkey Way, Boston, MA";
+		    Directions.load(currentQuery,opts,callBack);
 		}
 		
 	};
@@ -387,8 +396,8 @@ public class VRPGui implements EntryPoint {
 			
 			
 			DirectionQueryOptions opts = new DirectionQueryOptions(map);
-			String query = "from: " + city1 + " to: " + city2; // 500 Memorial Dr, Cambridge, MA to: 4 Yawkey Way, Boston, MA";
-		    Directions.load(query,opts,callBack);
+			currentQuery = "from: " + city1 + " to: " + city2; // 500 Memorial Dr, Cambridge, MA to: 4 Yawkey Way, Boston, MA";
+		    Directions.load(currentQuery,opts,callBack);
 		}else{
 			printOut();
 		}
@@ -636,6 +645,7 @@ public class VRPGui implements EntryPoint {
 			sb.append("\n");
 		}
 		
-		input.setText(sb.toString());
+		//input.setText(sb.toString());
+		output.setText(sb.toString());
 	}
 }
