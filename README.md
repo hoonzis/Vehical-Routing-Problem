@@ -10,7 +10,7 @@ There are two versions. One written in Java, which runs as console applications 
 The GWT version uses Google Maps in order to visualize the results.
 
 You can get some more info about the tool at my blog page:
-http://hoonzis.blogspot.fr/2010/05/vehicle-routing-problem.html
+http://www.hoonzis.com/vehicle-routing-problem
 
 The working GWT version of the application is available here:
 http://hoonzis.github.com/Vehical-Routing-Problem/vrp/
